@@ -1,38 +1,124 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Divider from '../components/Divider.astro';
 
-const base = import.meta.env.BASE_URL;
-const blogHref = `${base}/blog`.replace('//', '/');
+// Tagline choice. The three candidates from the brief are kept here so Connor
+// can swap by toggling which line lives outside the comment.
+// Picked: "Notes on token engineering, from before it was the consensus."
+// Reason: carries the decade-long-angle signal without announcing it with a
+// drumroll — "before it was the consensus" is the claim, said flatly.
+const tagline = "Notes on token engineering, from before it was the consensus.";
+// Alternatives:
+// const tagline = "Called it a decade ago. Now building the thing.";
+// const tagline = "Watching this since 2016. Time to build.";
 ---
-<BaseLayout title="Connor Atkins">
-  <h1>Connor Atkins</h1>
-  <p class="tagline">Token engineering. Time to build.</p>
+<BaseLayout title="Connor Atkins" home>
+  <h1 class="hero">{tagline}</h1>
 
-  <p>
-    I'm a PhD researcher working on uncertainty-guided multi-resolution
-    classification of whole slide images — teaching neural networks to grade
-    colorectal cancer the way a pathologist actually does, zooming in only
-    when the tissue is ambiguous. My thesis combines multiple-instance
-    learning, foundation-model features, and knowledge distillation across
-    magnifications.
+  <p class="bio">
+    PhD in computational pathology at Swansea, currently finishing the thesis
+    on whole-slide image classification. I write about token engineering —
+    the craft of building harnesses around language models so that the tokens
+    coming out are grounded, useful, and aimed at something that matters.
   </p>
 
-  <p>
-    Outside the lab I build agents. I'm interested in what happens when you
-    treat tokens as the unit of economic output — the shape of the tools,
-    harnesses, and interfaces that let small teams ship disproportionately.
-    Most of that work is public on GitHub; the rest will end up on this blog.
+  <p class="bio">
+    I am the specific ADHD-and-autistic combination where the two halves
+    spent twenty years pulling against each other — the scatter and the
+    system, the branching and the bracing — until the tooling finally
+    arrived that lets them pull in the same direction. Token engineering is
+    the first thing that has ever felt like coming home to both of them at
+    once.
   </p>
 
-  <p>
-    Currently based in the UK. Always happy to talk about computational
-    pathology, agent engineering, or poker.
+  <Divider />
+
+  <ul class="home-cards">
+    <li>
+      <a href="/blog"><span class="card-title">blog</span></a>
+      <span class="card-sub">long-form, infrequent. the absence of a post is itself a signal.</span>
+    </li>
+    <li>
+      <a href="/now"><span class="card-title">now</span></a>
+      <span class="card-sub">what this month actually looks like.</span>
+    </li>
+    <li>
+      <a href="/log"><span class="card-title">log</span></a>
+      <span class="card-sub">short, timestamped. cadence is the point.</span>
+    </li>
+  </ul>
+
+  <p class="cta">
+    <span class="cta-lead">read the first one:</span>
+    <a href="/blog/the-token-economy">The Token Economy &rarr;</a>
   </p>
 
-  <nav class="nav">
-    <a href={blogHref}>Blog</a>
-    <a href="#" aria-disabled="true" title="Coming soon">About</a>
-    <a href="https://github.com/connor113" rel="me noopener">GitHub</a>
-    <a href="https://twitter.com/ConnorAtkins11" rel="me noopener">Twitter</a>
-  </nav>
+  <Divider />
+
+  <footer class="site-footer">
+    <div class="links">
+      <a href="https://github.com/connor113" rel="me noopener" target="_blank">github.com/connor113</a>
+      <a href="https://twitter.com/ConnorAtkins11" rel="me noopener" target="_blank">@ConnorAtkins11</a>
+      <a href="mailto:connoratkins5@gmail.com">connoratkins5@gmail.com</a>
+    </div>
+    <span class="place">made in a notebook in swansea, wales</span>
+  </footer>
+
+  <style>
+    .hero {
+      margin-top: 24px;
+      margin-bottom: 28px;
+      max-width: 14ch;
+    }
+    .bio {
+      font-size: 1.05rem;
+      margin-bottom: 22px;
+    }
+    .home-cards {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .home-cards li {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .card-title {
+      font-family: var(--font-hand);
+      font-size: 1.8rem;
+      line-height: 1;
+      color: var(--accent);
+    }
+    .home-cards a {
+      border-bottom: 0;
+      display: inline-block;
+      width: fit-content;
+    }
+    .home-cards a:hover .card-title {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .card-sub {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.45;
+    }
+    .cta {
+      margin-top: 0;
+      font-size: 1rem;
+    }
+    .cta-lead {
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      letter-spacing: 0.02em;
+      margin-right: 8px;
+      display: inline-block;
+    }
+  </style>
 </BaseLayout>

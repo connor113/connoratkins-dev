@@ -1,0 +1,82 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Divider from '../components/Divider.astro';
+
+// Log entries live inline in this page for now — a single .astro with an
+// entries array is simpler than a content collection when the cadence is low
+// and the format is just date + title + one paragraph. Add new entries to
+// the top of this array.
+const entries: { date: string; title: string; body: string[] }[] = [
+  {
+    date: '2026-04-17',
+    title: 'site live',
+    body: [
+      "Submitted my paper at three in the morning yesterday. Slept four hours. Built this site tonight.",
+      "It is strange to see a thesis I have been carrying around for ten years arrive as typography. The token-economy essay is up. The Twitter push waits for the weekend; I want a day of the site simply existing before anyone is told about it.",
+      "Back to the thesis tomorrow.",
+    ],
+  },
+];
+---
+<BaseLayout title="log — Connor Atkins" description="Short, timestamped notes.">
+  <h1>log</h1>
+  <p class="meta">short. timestamped. unvarnished.</p>
+
+  {entries.map((entry, i) => (
+    <section class="entry">
+      <h2 class="entry-heading">
+        <span class="entry-date">{entry.date}</span>
+        <span class="entry-dash" aria-hidden="true"> &mdash; </span>
+        <span class="entry-title">{entry.title}</span>
+      </h2>
+      {entry.body.map((p) => <p>{p}</p>)}
+      {i < entries.length - 1 && <Divider tight />}
+    </section>
+  ))}
+
+  <Divider />
+
+  <p class="more hand">more to come.</p>
+
+  <style>
+    .entry {
+      margin-bottom: 8px;
+    }
+    .entry-heading {
+      font-family: var(--font-body);
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 24px 0 14px;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 4px;
+      padding-top: 0;
+    }
+    /* Override the article h2 sketched line for log — its H2s are entries,
+       not sections, so they don't want a sketched rule above each. */
+    .entry-heading::before {
+      content: none !important;
+    }
+    .entry-date {
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 400;
+      letter-spacing: 0.02em;
+    }
+    .entry-dash {
+      color: var(--muted);
+      font-weight: 400;
+    }
+    .entry-title {
+      color: var(--fg);
+    }
+    .more {
+      font-size: 1.4rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 16px;
+    }
+  </style>
+</BaseLayout>

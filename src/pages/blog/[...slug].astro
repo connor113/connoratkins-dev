@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Divider from '../../components/Divider.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -15,23 +16,55 @@ type Props = { post: CollectionEntry<'blog'> };
 const { post } = Astro.props;
 const { Content } = await render(post);
 
-const dateFmt = new Intl.DateTimeFormat('en-GB', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+// Word count from the markdown body. Strip HTML/markdown syntax noise then
+// split on whitespace — close enough for a human-facing number.
+const wordCount = (() => {
+  const body = post.body ?? '';
+  const clean = body
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/`[^`]*`/g, ' ')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/[#>*_~`-]/g, ' ')
+    .trim();
+  return clean.length === 0 ? 0 : clean.split(/\s+/).length;
+})();
 
-const base = import.meta.env.BASE_URL;
+const isoDate = post.data.pubDate.toISOString().slice(0, 10);
 ---
-<BaseLayout title={`${post.data.title} — Connor Atkins`} description={post.data.description} narrow>
+<BaseLayout
+  title={`${post.data.title} — Connor Atkins`}
+  description={post.data.description}
+  article
+>
   <h1>{post.data.title}</h1>
-  <p class="post-meta">{dateFmt.format(post.data.pubDate)}</p>
+  <p class="meta">published {isoDate} &middot; {wordCount.toLocaleString('en-GB')} words</p>
+
   <article>
     <Content />
   </article>
-  <hr />
-  <nav class="nav">
-    <a href={`${base}/blog`.replace('//', '/')}>&larr; All posts</a>
-    <a href={base.replace(/\/$/, '') || '/'}>Home</a>
-  </nav>
+
+  <Divider />
+
+  <p class="reply hand">
+    have thoughts? reply on twitter &rarr;
+    <a href="https://twitter.com/ConnorAtkins11" rel="me noopener" target="_blank">@ConnorAtkins11</a>
+  </p>
+
+  <style>
+    .reply {
+      font-size: 1.35rem;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .reply a {
+      font-family: var(--font-hand);
+      color: var(--accent);
+      border-bottom: 0;
+    }
+    .reply a:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+  </style>
 </BaseLayout>

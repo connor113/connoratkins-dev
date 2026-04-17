@@ -1,19 +1,32 @@
 ---
+import Mark from '../components/Mark.astro';
+
 export interface Props {
   title: string;
   description?: string;
-  /** When true, constrain content width to 680px (blog reading width). */
-  narrow?: boolean;
+  /** When true, enables paragraph-number counters on <article> content. */
+  article?: boolean;
+  /** Activate the wider home-column width (560px centred). */
+  home?: boolean;
 }
 
-const { title, description = "Connor Atkins — token engineering, time to build.", narrow = false } = Astro.props;
+const {
+  title,
+  description = "Connor Atkins — token engineering, notes from a long-standing observer finally building.",
+  article = false,
+  home = false,
+} = Astro.props;
 
 // Only emit the Plausible snippet when PUBLIC_ENABLE_ANALYTICS is the literal
-// string "true". Astro inlines import.meta.env at build time, so this is a
-// static conditional — no analytics noise during `npm run dev` unless the
-// dev explicitly opts in.
+// string "true". Kept unchanged from the scaffold.
 const analyticsEnabled = import.meta.env.PUBLIC_ENABLE_ANALYTICS === "true";
-const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN ?? "connoratkins.dev";
+const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN ?? "connoratkins.ai";
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isHome = pathname === '/';
+const isBlog = pathname.startsWith('/blog');
+const isNow = pathname === '/now';
+const isLog = pathname === '/log';
 ---
 <!doctype html>
 <html lang="en">
@@ -21,9 +34,15 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN ?? "connoratkins
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}/favicon.svg`.replace('//', '/')} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400;1,6..72,500&family=Caveat:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
+    />
     {analyticsEnabled && (
       <script
         defer
@@ -32,29 +51,42 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN ?? "connoratkins
       ></script>
     )}
   </head>
-  <body class={narrow ? 'narrow' : 'centred'}>
-    <main>
+  <body class={`${article ? 'is-article' : ''} ${home ? 'is-home' : ''}`}>
+    <header class="site-header">
+      <Mark />
+      <nav class="site-nav" aria-label="primary">
+        <a href="/blog" class={isBlog ? 'is-current' : ''}>blog</a>
+        <span class="dot" aria-hidden="true">&middot;</span>
+        <a href="/now" class={isNow ? 'is-current' : ''}>now</a>
+        <span class="dot" aria-hidden="true">&middot;</span>
+        <a href="/log" class={isLog ? 'is-current' : ''}>log</a>
+      </nav>
+    </header>
+
+    <main class={article ? 'main-article' : ''}>
       <slot />
     </main>
+
     <style is:global>
       :root {
-        --bg: #fafafa;
-        --fg: #1a1a1a;
-        --muted: #555;
-        --rule: #e5e5e5;
-        --accent: #0066CC;
-        --font-body:
-          -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui,
-          sans-serif;
+        --bg: #FAF7F0;
+        --fg: #1a1814;
+        --muted: #7a7368;
+        --rule: #5a5248;
+        --accent: #0F4C81;
+
+        --font-body: 'Newsreader', 'Source Serif 4', Georgia, Cambria, 'Times New Roman', serif;
+        --font-hand: 'Caveat', 'Segoe Script', 'Bradley Hand', cursive;
+        --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
       }
 
       @media (prefers-color-scheme: dark) {
         :root {
-          --bg: #0a0a0a;
-          --fg: #e8e8e8;
-          --muted: #999;
-          --rule: #262626;
-          --accent: #4d9fff;
+          --bg: #1c1a15;
+          --fg: #eae6db;
+          --muted: #8a8276;
+          --rule: #6a6258;
+          --accent: #6ba3d6;
         }
       }
 
@@ -66,54 +98,123 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN ?? "connoratkins
         background: var(--bg);
         color: var(--fg);
         font-family: var(--font-body);
-        font-size: 17px;
-        line-height: 1.55;
+        font-size: 18px;
+        line-height: 1.65;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
       }
 
       body {
-        padding: 3rem 1.5rem 6rem;
+        padding: 32px 24px 96px;
       }
 
       main {
+        max-width: 680px;
+        margin: 48px auto 0;
+      }
+
+      body.is-home main {
+        max-width: 560px;
+      }
+
+      .site-header {
+        max-width: 680px;
         margin: 0 auto;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
       }
 
-      body.narrow main {
-        max-width: 680px;
+      body.is-home .site-header {
+        max-width: 560px;
       }
 
-      body.centred main {
-        max-width: 680px;
+      .site-nav {
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
+        color: var(--muted);
+        display: inline-flex;
+        align-items: baseline;
+        gap: 6px;
+        letter-spacing: 0.02em;
+      }
+      .site-nav a {
+        color: var(--muted);
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+        padding-bottom: 1px;
+      }
+      .site-nav a:hover,
+      .site-nav a.is-current {
+        color: var(--accent);
+        border-bottom-color: var(--accent);
+      }
+      .site-nav .dot {
+        color: var(--muted);
+        opacity: 0.6;
       }
 
       a {
         color: var(--accent);
         text-decoration: none;
         border-bottom: 1px solid transparent;
+        transition: border-color 120ms ease;
       }
-
       a:hover {
-        border-bottom-color: var(--accent);
+        border-bottom-color: currentColor;
       }
 
-      h1, h2, h3 {
+      h1 {
+        font-family: var(--font-hand);
+        font-weight: 500;
+        line-height: 1.02;
+        letter-spacing: -0.005em;
+        margin: 0 0 12px;
+        font-size: 3.6rem; /* ~65px — used on page-level H1s */
+        color: var(--fg);
+      }
+
+      h2, h3, h4 {
+        font-family: var(--font-body);
+        line-height: 1.2;
+        color: var(--fg);
+      }
+      h2 {
         font-weight: 600;
-        line-height: 1.25;
+        font-size: 1.55rem;
+        margin: 56px 0 18px;
+        letter-spacing: -0.005em;
+      }
+      h3 {
+        font-weight: 600;
+        font-size: 1.15rem;
+        margin: 36px 0 10px;
       }
 
-      h1 { font-size: 2rem; margin: 0 0 0.25rem; }
-      h2 { font-size: 1.3rem; margin: 2.5rem 0 0.75rem; }
-      h3 { font-size: 1.05rem; margin: 1.75rem 0 0.5rem; }
+      p {
+        margin: 0 0 24px;
+      }
 
-      p { margin: 0 0 1rem; }
+      em, i { font-style: italic; }
+      strong, b { font-weight: 600; }
 
       hr {
         border: 0;
-        border-top: 1px solid var(--rule);
-        margin: 2.5rem 0;
+        height: 1px;
+        background: var(--rule);
+        opacity: 0.4;
+        margin: 48px 0;
       }
+
+      blockquote {
+        margin: 24px 0;
+        padding: 4px 0 4px 20px;
+        border-left: 2px solid var(--rule);
+        color: var(--muted);
+        font-style: italic;
+      }
+      blockquote p:last-child { margin-bottom: 0; }
 
       img {
         max-width: 100%;
@@ -121,54 +222,177 @@ const analyticsDomain = import.meta.env.PUBLIC_ANALYTICS_DOMAIN ?? "connoratkins
       }
 
       code {
-        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-family: var(--font-mono);
         font-size: 0.9em;
+        background: color-mix(in srgb, var(--rule) 18%, transparent);
+        padding: 1px 5px;
+        border-radius: 3px;
       }
-
-      .tagline {
-        color: var(--muted);
-        font-style: italic;
-        margin: 0.25rem 0 2rem;
-      }
-
-      .nav {
-        margin-top: 3rem;
-        font-size: 0.95rem;
-        color: var(--muted);
-      }
-
-      .nav a { margin-right: 1rem; }
-
-      .post-list {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-      }
-
-      .post-list li {
-        padding: 1rem 0;
-        border-bottom: 1px solid var(--rule);
-      }
-
-      .post-list li:last-child { border-bottom: 0; }
-
-      .post-list .date {
-        color: var(--muted);
+      pre {
+        font-family: var(--font-mono);
         font-size: 0.9rem;
+        background: color-mix(in srgb, var(--rule) 12%, transparent);
+        padding: 16px;
+        border-radius: 4px;
+        overflow-x: auto;
+      }
+      pre code { background: none; padding: 0; }
+
+      ul, ol {
+        padding-left: 24px;
+        margin: 0 0 24px;
+      }
+      li {
+        margin: 6px 0;
+      }
+
+      .meta {
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        color: var(--muted);
+        letter-spacing: 0.02em;
+        margin: 0 0 40px;
+      }
+
+      .hand {
+        font-family: var(--font-hand);
+        font-weight: 400;
+      }
+
+      .muted { color: var(--muted); }
+
+      /* Article layout: paragraph-number counter in the left margin.
+         Scoped to <body.is-article> so regular pages are unaffected. */
+      body.is-article main.main-article {
+        counter-reset: para;
+      }
+      body.is-article article {
+        counter-reset: para;
+      }
+      body.is-article article > p {
+        counter-increment: para;
+        position: relative;
+      }
+
+      @media (min-width: 900px) {
+        body.is-article main.main-article {
+          padding-left: 48px;
+        }
+        body.is-article article > p::before {
+          content: counter(para);
+          position: absolute;
+          left: -48px;
+          top: 0.5em;
+          width: 32px;
+          text-align: right;
+          font-family: var(--font-mono);
+          font-size: 0.72rem;
+          color: var(--muted);
+          opacity: 0.55;
+          letter-spacing: 0;
+          font-variant-numeric: tabular-nums;
+        }
+      }
+
+      /* Article typography: make body figures full-width with a Caveat caption
+         if an <em> follows the image (convention for Markdown). */
+      body.is-article article img {
         display: block;
-        margin-top: 0.25rem;
+        margin: 40px auto 6px;
+        max-width: 100%;
+      }
+      body.is-article article img + em,
+      body.is-article article p > img + em {
+        display: block;
+        text-align: center;
+        font-family: var(--font-hand);
+        font-style: normal;
+        color: var(--muted);
+        font-size: 1.2rem;
+        margin: 2px auto 40px;
       }
 
-      .post-list .desc {
-        color: var(--muted);
-        font-size: 0.95rem;
-        margin: 0.35rem 0 0;
+      /* Sketched margin above each article h2 — pseudo-element svg background.
+         The path is inlined as a data URI, stroke colour inherits via currentColor. */
+      body.is-article article h2 {
+        position: relative;
+        margin-top: 72px;
+        padding-top: 28px;
+      }
+      body.is-article article h2::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 160px;
+        height: 12px;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12' preserveAspectRatio='none'><path d='M2 6 C 30 3, 60 9, 90 6 S 130 3, 158 7' stroke='%235a5248' stroke-width='1.2' stroke-linecap='round' fill='none' opacity='0.7'/></svg>");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+      @media (prefers-color-scheme: dark) {
+        body.is-article article h2::before {
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 160 12' preserveAspectRatio='none'><path d='M2 6 C 30 3, 60 9, 90 6 S 130 3, 158 7' stroke='%236a6258' stroke-width='1.2' stroke-linecap='round' fill='none' opacity='0.75'/></svg>");
+        }
       }
 
-      .post-meta {
+      /* Responsive hero sizes. */
+      @media (min-width: 700px) {
+        h1 { font-size: 4.4rem; }
+        body.is-home h1.hero { font-size: 5rem; }
+      }
+      @media (min-width: 960px) {
+        body.is-home h1.hero { font-size: 5.6rem; }
+      }
+
+      /* Hand-drawn bullet list style — used on /now "building". */
+      ul.hand-list {
+        list-style: none;
+        padding-left: 0;
+      }
+      ul.hand-list li {
+        position: relative;
+        padding-left: 28px;
+        margin: 10px 0;
+      }
+      ul.hand-list li::before {
+        content: "—";
+        position: absolute;
+        left: 0;
+        top: 0;
+        font-family: var(--font-hand);
+        color: var(--accent);
+        font-size: 1.4rem;
+        line-height: 1.2;
+      }
+
+      /* Footer styles (home page). */
+      .site-footer {
+        margin-top: 80px;
+        font-family: var(--font-mono);
+        font-size: 0.82rem;
         color: var(--muted);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .site-footer .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+      }
+      .site-footer a {
+        color: var(--muted);
+      }
+      .site-footer a:hover {
+        color: var(--accent);
+      }
+      .site-footer .place {
+        font-family: var(--font-body);
+        font-style: italic;
         font-size: 0.9rem;
-        margin-bottom: 2rem;
+        margin-top: 14px;
+        opacity: 0.75;
       }
     </style>
   </body>

@@ -1,0 +1,94 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Divider from '../components/Divider.astro';
+
+const lastUpdated = '2026-04-17';
+---
+<BaseLayout title="now — Connor Atkins" description="What I'm working on this month.">
+  <h1>now</h1>
+  <p class="meta">last updated {lastUpdated}</p>
+
+  <h2>focus</h2>
+  <p>
+    Finishing the PhD thesis — final chapter drafting and the August 2026
+    submission. In parallel, articulating what I keep calling token
+    engineering into a small set of public artifacts (this site, a first
+    essay, a few figures) so that the past decade of watching the frontier
+    stops being something I only say in private.
+  </p>
+  <p>
+    Slower-burn: early spinout planning with a fellow PhD student, and the
+    first few commits on a poker harness repo I've been meaning to build for
+    a year. I have a paper under double-blind review; details when decision
+    time arrives.
+  </p>
+
+  <h2>building</h2>
+  <ul class="hand-list">
+    <li>the token-economy essay, plus this site as its home</li>
+    <li>OpenClaw — my personal agent harness; ongoing craft, not a project</li>
+    <li>a poker-engineering harness repo, currently scaffold-stage</li>
+    <li>the remaining thesis chapters, one careful revision at a time</li>
+  </ul>
+
+  <h2>reading</h2>
+  <ul class="hand-list">
+    <li>currently: [FILL ME — Connor]</li>
+    <li>on the list: [FILL ME — Connor]</li>
+    <li>recently finished: [FILL ME — Connor]</li>
+  </ul>
+
+  <h2>listening</h2>
+  <ul class="hand-list">
+    <li>podcast on rotation: [FILL ME — Connor]</li>
+    <li>album in the background: [FILL ME — Connor]</li>
+  </ul>
+
+  <h2>thinking about</h2>
+  <ul class="thinking">
+    <li><em>whether apps-as-software-alone go to zero faster than i'm planning for.</em></li>
+    <li><em>what the half-life of a harness design actually is, once frontier models shift weekly.</em></li>
+    <li><em>how to measure the ROI of improving a harness vs. switching to the next model underneath it.</em></li>
+  </ul>
+
+  <Divider />
+
+  <p class="now-footer muted">
+    the <code>now page</code> convention comes from
+    <a href="https://nownownow.com" rel="noopener" target="_blank">nownownow.com</a>.
+    i update this fortnightly.
+  </p>
+
+  <style>
+    .thinking {
+      list-style: none;
+      padding-left: 0;
+    }
+    .thinking li {
+      position: relative;
+      padding-left: 28px;
+      margin: 14px 0;
+      font-size: 1.02rem;
+    }
+    .thinking li::before {
+      content: "?";
+      position: absolute;
+      left: 0;
+      top: -2px;
+      font-family: var(--font-hand);
+      color: var(--accent);
+      font-size: 1.6rem;
+      line-height: 1;
+    }
+    .now-footer {
+      font-size: 0.95rem;
+    }
+    .now-footer code {
+      background: none;
+      padding: 0;
+      color: var(--muted);
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+    }
+  </style>
+</BaseLayout>

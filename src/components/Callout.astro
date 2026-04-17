@@ -1,0 +1,68 @@
+---
+// Callout.astro — a hand-drawn aside box.
+// Renders an SVG outline that wraps the slot content; the stroke is uneven
+// so it feels drawn rather than set. Use for margin notes and warnings.
+export interface Props {
+  label?: string;
+}
+const { label } = Astro.props;
+---
+<aside class="callout">
+  <svg
+    class="callout-frame"
+    viewBox="0 0 400 120"
+    preserveAspectRatio="none"
+    aria-hidden="true"
+  >
+    <path
+      d="M6 10
+         C 40 4, 120 8, 200 6
+         S 340 10, 394 8
+         C 396 30, 392 70, 395 112
+         C 340 116, 220 112, 140 115
+         S 30 112, 5 114
+         C 8 80, 3 50, 6 10 Z"
+      fill="none"
+      stroke-width="1.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+  <div class="callout-body">
+    {label && <span class="callout-label">{label}</span>}
+    <slot />
+  </div>
+</aside>
+
+<style>
+  .callout {
+    position: relative;
+    padding: 20px 24px;
+    margin: 32px 0;
+  }
+  .callout-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  .callout-frame path {
+    stroke: var(--rule);
+  }
+  .callout-body {
+    position: relative;
+    color: var(--fg);
+  }
+  .callout-body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+  .callout-label {
+    display: block;
+    font-family: var(--font-hand);
+    color: var(--accent);
+    font-size: 1.35rem;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+</style>

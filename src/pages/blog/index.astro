@@ -1,39 +1,110 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Divider from '../../components/Divider.astro';
 
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 
-const dateFmt = new Intl.DateTimeFormat('en-GB', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
-
-const base = import.meta.env.BASE_URL;
-const href = (id: string) => `${base}/blog/${id}`.replace('//', '/');
+const isoFmt = (d: Date) => d.toISOString().slice(0, 10);
 ---
-<BaseLayout title="Blog — Connor Atkins" narrow>
-  <h1>Blog</h1>
-  <p class="tagline">Notes on agents, pathology, and shipping.</p>
+<BaseLayout title="blog — Connor Atkins" description="Essays on token engineering.">
+  <h1>blog</h1>
+  <p class="intro">
+    essays, long-form. i only post when i have something to say.
+    the absence of a post is itself a signal.
+  </p>
+
+  <Divider />
 
   {posts.length === 0 ? (
-    <p>Nothing published yet — check back soon.</p>
+    <p class="muted">nothing yet. check back.</p>
   ) : (
-    <ul class="post-list">
+    <ul class="posts">
       {posts.map((post) => (
-        <li>
-          <a href={href(post.id)}><strong>{post.data.title}</strong></a>
-          <span class="date">{dateFmt.format(post.data.pubDate)}</span>
-          {post.data.description && <p class="desc">{post.data.description}</p>}
+        <li class="post">
+          <a href={`/blog/${post.id}`} class="post-link">
+            <span class="post-date">{isoFmt(post.data.pubDate)}</span>
+            <span class="post-title">{post.data.title}</span>
+          </a>
+          {post.data.description && <p class="post-desc">{post.data.description}</p>}
         </li>
       ))}
     </ul>
   )}
 
-  <nav class="nav">
-    <a href={base.replace(/\/$/, '') || '/'}>Home</a>
-  </nav>
+  <p class="more hand">more soon</p>
+
+  <style>
+    .intro {
+      font-size: 1.02rem;
+      color: var(--fg);
+      max-width: 56ch;
+    }
+    .posts {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    .post {
+      padding: 18px 0 20px;
+      border-bottom: 1px dashed color-mix(in srgb, var(--rule) 55%, transparent);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .post:last-child { border-bottom: 0; }
+    .post-link {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-bottom: 0;
+    }
+    .post-date {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .post-title {
+      font-family: var(--font-body);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+      line-height: 1.25;
+    }
+    .post-link:hover .post-title {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+    .post-desc {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    @media (min-width: 700px) {
+      .post-link {
+        flex-direction: row;
+        align-items: baseline;
+        gap: 18px;
+      }
+      .post-date {
+        flex-shrink: 0;
+        width: 96px;
+        padding-top: 6px;
+      }
+      .post-desc {
+        padding-left: 114px;
+      }
+    }
+    .more {
+      margin-top: 48px;
+      color: var(--muted);
+      font-size: 1.4rem;
+      font-style: italic;
+    }
+  </style>
 </BaseLayout>

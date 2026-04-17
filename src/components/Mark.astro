@@ -1,0 +1,66 @@
+---
+// Mark.astro — Connor's signature monogram.
+// Hand-traced CA in a fountain-pen style. Two strokes:
+//   1. a slightly wavering C that overshoots at the bottom
+//   2. an A (left leg, right leg, crossbar) drawn as if in one motion
+// Stroke is set to var(--accent); `fill="none"` keeps it a line drawing.
+// Imperfections are deliberate — coordinates are off-grid on purpose.
+---
+<a href="/" aria-label="home — Connor Atkins" class="mark">
+  <svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    role="img"
+    aria-hidden="true"
+    focusable="false"
+  >
+    <!-- C: a three-quarter arc that overshoots the bottom tail slightly.
+         The control points are intentionally uneven so the curve wavers. -->
+    <path
+      d="M16.2 8.6
+         C 11.5 8.9, 7.8 12.7, 7.6 17.8
+         C 7.3 23.4, 11.1 28.8, 16.9 29.4
+         C 19.0 29.6, 20.9 29.2, 22.4 28.1"
+      fill="none"
+      stroke-width="2.6"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+    <!-- A: left leg from apex down, right leg from apex down, crossbar.
+         Apex sits slightly right-of-centre; legs splay unevenly. -->
+    <path
+      d="M22.8 30.6
+         L 27.9 10.3
+         L 33.7 30.9
+         M 25.1 22.4
+         L 31.9 22.1"
+      fill="none"
+      stroke-width="2.4"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    />
+  </svg>
+</a>
+
+<style>
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-bottom: 0 !important;
+    text-decoration: none;
+  }
+  .mark svg {
+    overflow: visible;
+    transition: transform 160ms ease;
+  }
+  .mark svg path {
+    stroke: var(--accent);
+  }
+  .mark:hover svg {
+    transform: rotate(-2deg);
+  }
+</style>
