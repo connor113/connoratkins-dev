@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Central LLM surrounded by six files: USER, SOUL, AGENT, SKILLS, TOOLS, MEMORY.">
+  <title>OpenClaw harness: six files around a central LLM</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #555555;
+      --accent: #0066CC;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0a;
+        --fg: #ffffff;
+        --muted: #bbbbbb;
+        --accent: #0066CC;
+      }
+    }
+    .bg { fill: var(--bg); }
+    .node { fill: var(--bg); stroke: var(--fg); stroke-width: 2.5; }
+    .node-center { fill: var(--bg); stroke: var(--accent); stroke-width: 4; }
+    .title-text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: var(--fg); text-anchor: middle; }
+    .center-text { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 800; fill: var(--accent); text-anchor: middle; }
+    .sub { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; fill: var(--muted); text-anchor: middle; }
+    .edge { stroke: var(--fg); stroke-width: 2.5; fill: none; opacity: 0.8; }
+    .tip { fill: var(--fg); stroke: none; opacity: 0.85; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1200" height="675"/>
+
+  <!-- Each connector is a bare line plus two explicit triangular tips,
+       one at each end, so the arrows render identically in every SVG
+       engine (including resvg, which handles <marker> inconsistently). -->
+
+  <!-- Geometry reference:
+       central circle: centre (600,338) radius 100
+       outer nodes (centres):
+         TL USER    (250,160)   node extent x:120-380 y:105-215
+         TR AGENT   (950,160)   node extent x:820-1080 y:105-215
+         ML SOUL    (125,338)   node extent x:10-240 y:283-393
+         MR SKILLS  (1075,338)  node extent x:960-1190 y:283-393
+         BL MEMORY  (250,516)   node extent x:120-380 y:461-571
+         BR TOOLS   (950,516)   node extent x:820-1080 y:461-571 -->
+
+  <!-- TL: USER.md <-> LLM -->
+  <line class="edge" x1="370" y1="212" x2="524" y2="286"/>
+  <!-- tip at LLM end (pointing toward LLM / down-right) -->
+  <polygon class="tip" points="524,286 508,284 516,270"/>
+  <!-- tip at USER end (pointing toward USER / up-left) -->
+  <polygon class="tip" points="370,212 386,214 378,228"/>
+
+  <!-- TR: AGENT.md <-> LLM -->
+  <line class="edge" x1="830" y1="212" x2="676" y2="286"/>
+  <polygon class="tip" points="676,286 692,284 684,270"/>
+  <polygon class="tip" points="830,212 814,214 822,228"/>
+
+  <!-- ML: SOUL.md <-> LLM (horizontal) -->
+  <line class="edge" x1="248" y1="338" x2="498" y2="338"/>
+  <polygon class="tip" points="498,338 482,330 482,346"/>
+  <polygon class="tip" points="248,338 264,330 264,346"/>
+
+  <!-- MR: SKILLS.md <-> LLM (horizontal) -->
+  <line class="edge" x1="952" y1="338" x2="702" y2="338"/>
+  <polygon class="tip" points="702,338 718,330 718,346"/>
+  <polygon class="tip" points="952,338 936,330 936,346"/>
+
+  <!-- BL: MEMORY.md <-> LLM -->
+  <line class="edge" x1="370" y1="464" x2="524" y2="390"/>
+  <polygon class="tip" points="524,390 508,392 516,406"/>
+  <polygon class="tip" points="370,464 386,462 378,448"/>
+
+  <!-- BR: TOOLS.md <-> LLM -->
+  <line class="edge" x1="830" y1="464" x2="676" y2="390"/>
+  <polygon class="tip" points="676,390 692,392 684,406"/>
+  <polygon class="tip" points="830,464 814,462 822,448"/>
+
+  <!-- Central LLM (drawn after edges so edges tuck under it) -->
+  <circle class="node-center" cx="600" cy="338" r="100"/>
+  <text class="center-text" x="600" y="352" font-size="44">LLM</text>
+
+  <!-- Node: USER.md (top-left) -->
+  <rect class="node" x="120" y="105" width="260" height="110" rx="12" ry="12"/>
+  <text class="title-text" x="250" y="148" font-size="26">USER.md</text>
+  <text class="sub" x="250" y="185" font-size="18">who the user is</text>
+
+  <!-- Node: AGENT.md (top-right) -->
+  <rect class="node" x="820" y="105" width="260" height="110" rx="12" ry="12"/>
+  <text class="title-text" x="950" y="148" font-size="26">AGENT.md</text>
+  <text class="sub" x="950" y="185" font-size="18">operating rules</text>
+
+  <!-- Node: SOUL.md (mid-left) -->
+  <rect class="node" x="10" y="283" width="230" height="110" rx="12" ry="12"/>
+  <text class="title-text" x="125" y="326" font-size="26">SOUL.md</text>
+  <text class="sub" x="125" y="363" font-size="18">personality / stance</text>
+
+  <!-- Node: SKILLS.md (mid-right) -->
+  <rect class="node" x="960" y="283" width="230" height="110" rx="12" ry="12"/>
+  <text class="title-text" x="1075" y="326" font-size="26">SKILLS.md</text>
+  <text class="sub" x="1075" y="363" font-size="18">what it can do</text>
+
+  <!-- Node: MEMORY.md (bot-left) -->
+  <rect class="node" x="120" y="461" width="260" height="110" rx="12" ry="12"/>
+  <text class="title-text" x="250" y="504" font-size="26">MEMORY.md</text>
+  <text class="sub" x="250" y="541" font-size="18">what it remembers</text>
+
+  <!-- Node: TOOLS.md (bot-right) -->
+  <rect class="node" x="820" y="461" width="260" height="110" rx="12" ry="12"/>
+  <text class="title-text" x="950" y="504" font-size="26">TOOLS.md</text>
+  <text class="sub" x="950" y="541" font-size="18">what it can reach</text>
+
+  <!-- Caption -->
+  <text class="sub" x="600" y="640" font-size="20">The harness: six files that shape the model's context.</text>
+</svg>

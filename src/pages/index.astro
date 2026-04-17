@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const base = import.meta.env.BASE_URL;
+const blogHref = `${base}/blog`.replace('//', '/');
+---
+<BaseLayout title="Connor Atkins">
+  <h1>Connor Atkins</h1>
+  <p class="tagline">Token engineering. Time to build.</p>
+
+  <p>
+    I'm a PhD researcher working on uncertainty-guided multi-resolution
+    classification of whole slide images — teaching neural networks to grade
+    colorectal cancer the way a pathologist actually does, zooming in only
+    when the tissue is ambiguous. My thesis combines multiple-instance
+    learning, foundation-model features, and knowledge distillation across
+    magnifications.
+  </p>
+
+  <p>
+    Outside the lab I build agents. I'm interested in what happens when you
+    treat tokens as the unit of economic output — the shape of the tools,
+    harnesses, and interfaces that let small teams ship disproportionately.
+    Most of that work is public on GitHub; the rest will end up on this blog.
+  </p>
+
+  <p>
+    Currently based in the UK. Always happy to talk about computational
+    pathology, agent engineering, or poker.
+  </p>
+
+  <nav class="nav">
+    <a href={blogHref}>Blog</a>
+    <a href="#" aria-disabled="true" title="Coming soon">About</a>
+    <a href="https://github.com/connor113" rel="me noopener">GitHub</a>
+    <a href="https://twitter.com/ConnorAtkins11" rel="me noopener">Twitter</a>
+  </nav>
+</BaseLayout>

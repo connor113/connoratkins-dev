@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Human cognition vs LLM harness: sensory input maps to input tokens, stream of consciousness to reasoning, grounded action to tool-grounded output.">
+  <title>Human agency analogy: three-level mapping to the LLM harness</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --fg: #111111;
+      --muted: #555555;
+      --accent: #0066CC;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0a0a0a;
+        --fg: #ffffff;
+        --muted: #bbbbbb;
+        --accent: #0066CC;
+      }
+    }
+    .bg { fill: var(--bg); }
+    .box { fill: var(--bg); stroke: var(--fg); stroke-width: 2.5; }
+    .box-accent { fill: var(--bg); stroke: var(--accent); stroke-width: 2.5; }
+    .col-title { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 800; fill: var(--fg); text-anchor: middle; }
+    .col-title-accent { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 800; fill: var(--accent); text-anchor: middle; }
+    .label { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: var(--fg); text-anchor: middle; }
+    .sub { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; fill: var(--muted); text-anchor: middle; }
+    .v-arrow { stroke: var(--fg); stroke-width: 3; fill: none; }
+    .v-arrow-accent { stroke: var(--accent); stroke-width: 3; fill: none; }
+    .h-arrow { stroke: var(--muted); stroke-width: 2; fill: none; stroke-dasharray: 6 6; }
+    .arrow-head { fill: var(--fg); stroke: none; }
+    .arrow-head-accent { fill: var(--accent); stroke: none; }
+    .arrow-head-muted { fill: var(--muted); stroke: none; }
+  </style>
+
+  <rect class="bg" x="0" y="0" width="1200" height="675"/>
+
+  <!-- Column headings -->
+  <text class="col-title" x="280" y="70" font-size="34">Human</text>
+  <text class="col-title-accent" x="920" y="70" font-size="34">LLM harness</text>
+
+  <!-- Dividing line (subtle) -->
+  <line x1="600" y1="100" x2="600" y2="620" stroke="currentColor" stroke-dasharray="2 8" opacity="0.15"/>
+
+  <!-- Left column (Human) -->
+  <!-- Row 1: Sensory input -->
+  <rect class="box" x="80" y="110" width="400" height="90" rx="12" ry="12"/>
+  <text class="label" x="280" y="162" font-size="26">Sensory input</text>
+
+  <!-- Row 2: Stream of consciousness -->
+  <rect class="box" x="80" y="292" width="400" height="90" rx="12" ry="12"/>
+  <text class="label" x="280" y="344" font-size="26">Stream of consciousness</text>
+
+  <!-- Row 3: Grounded action -->
+  <rect class="box" x="80" y="474" width="400" height="90" rx="12" ry="12"/>
+  <text class="label" x="280" y="526" font-size="26">Grounded action</text>
+
+  <!-- Left column vertical arrows -->
+  <line class="v-arrow" x1="280" y1="200" x2="280" y2="282"/>
+  <polygon class="arrow-head" points="268,282 292,282 280,298"/>
+  <line class="v-arrow" x1="280" y1="382" x2="280" y2="464"/>
+  <polygon class="arrow-head" points="268,464 292,464 280,480"/>
+
+  <!-- Right column (LLM harness) -->
+  <!-- Row 1: Input tokens -->
+  <rect class="box-accent" x="720" y="110" width="400" height="90" rx="12" ry="12"/>
+  <text class="label" x="920" y="162" font-size="26">Input tokens</text>
+
+  <!-- Row 2: Reasoning / inner monologue -->
+  <rect class="box-accent" x="720" y="292" width="400" height="90" rx="12" ry="12"/>
+  <text class="label" x="920" y="337" font-size="24">Reasoning /</text>
+  <text class="label" x="920" y="365" font-size="24">inner monologue</text>
+
+  <!-- Row 3: Tool-grounded output -->
+  <rect class="box-accent" x="720" y="474" width="400" height="90" rx="12" ry="12"/>
+  <text class="label" x="920" y="526" font-size="26">Tool-grounded output</text>
+
+  <!-- Right column vertical arrows -->
+  <line class="v-arrow-accent" x1="920" y1="200" x2="920" y2="282"/>
+  <polygon class="arrow-head-accent" points="908,282 932,282 920,298"/>
+  <line class="v-arrow-accent" x1="920" y1="382" x2="920" y2="464"/>
+  <polygon class="arrow-head-accent" points="908,464 932,464 920,480"/>
+
+  <!-- Horizontal mapping arrows (one-to-one between columns) -->
+  <line class="h-arrow" x1="480" y1="155" x2="720" y2="155"/>
+  <polygon class="arrow-head-muted" points="720,147 720,163 734,155"/>
+
+  <line class="h-arrow" x1="480" y1="337" x2="720" y2="337"/>
+  <polygon class="arrow-head-muted" points="720,329 720,345 734,337"/>
+
+  <line class="h-arrow" x1="480" y1="519" x2="720" y2="519"/>
+  <polygon class="arrow-head-muted" points="720,511 720,527 734,519"/>
+
+  <!-- Mapping labels above dashed arrows -->
+  <text class="sub" x="600" y="143" font-size="16">maps to</text>
+  <text class="sub" x="600" y="325" font-size="16">maps to</text>
+  <text class="sub" x="600" y="507" font-size="16">maps to</text>
+
+  <!-- Caption -->
+  <text class="sub" x="600" y="640" font-size="20">Three layers, two substrates: perception, thought, action.</text>
+</svg>
