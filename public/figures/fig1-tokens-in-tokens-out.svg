@@ -1,55 +1,128 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Tokens in, LLM, tokens out.">
-  <title>Tokens in -> LLM -> Tokens out</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Hand-drawn diagram: input tokens, arrow, LLM, arrow, output tokens.">
+  <title>input tokens -> LLM -> output tokens</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&amp;family=Newsreader:ital,wght@0,400;1,400&amp;display=swap');
     :root {
-      --bg: #ffffff;
-      --fg: #111111;
-      --muted: #555555;
-      --accent: #0066CC;
+      --bg: #FAF7F0;
+      --fg: #1a1814;
+      --muted: #7a7368;
+      --accent: #0F4C81;
+      --accent-fill: rgba(15, 76, 129, 0.12);
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0a0a0a;
-        --fg: #ffffff;
-        --muted: #bbbbbb;
-        --accent: #0066CC;
+        --bg: #1c1a15;
+        --fg: #eae6db;
+        --muted: #8a8276;
+        --accent: #6ba3d6;
+        --accent-fill: rgba(107, 163, 214, 0.14);
       }
     }
     .bg { fill: var(--bg); }
-    .box { fill: none; stroke: var(--fg); stroke-width: 3; }
-    .box-accent { fill: none; stroke: var(--accent); stroke-width: 4; }
-    .label { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: var(--fg); text-anchor: middle; }
-    .label-accent { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 700; fill: var(--accent); text-anchor: middle; }
-    .sub { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; fill: var(--muted); text-anchor: middle; }
-    .arrow { stroke: var(--fg); stroke-width: 4; fill: none; }
-    .arrow-head { fill: var(--fg); stroke: none; }
+    .ink {
+      fill: none;
+      stroke: var(--fg);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ink-accent {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .accent-fill { fill: var(--accent-fill); stroke: none; }
+    .dot { fill: var(--fg); stroke: none; }
+    .label-hand {
+      font-family: 'Caveat', 'Comic Sans MS', 'Bradley Hand', cursive;
+      font-weight: 600;
+      fill: var(--fg);
+      text-anchor: middle;
+    }
+    .label-hand-accent {
+      font-family: 'Caveat', 'Comic Sans MS', 'Bradley Hand', cursive;
+      font-weight: 600;
+      fill: var(--accent);
+      text-anchor: middle;
+    }
+    .caption-serif {
+      font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 400;
+      fill: var(--muted);
+      text-anchor: middle;
+    }
   </style>
 
   <rect class="bg" x="0" y="0" width="1200" height="675"/>
 
-  <!-- Input tokens box -->
-  <rect class="box" x="60" y="237" width="300" height="200" rx="16" ry="16"/>
-  <text class="label" x="210" y="330" font-size="40">Input</text>
-  <text class="label" x="210" y="380" font-size="40">tokens</text>
+  <!-- Figure 1: three wobbly rectangles with hand-drawn arrows between them.
+       Boxes are drawn as <path> with 4 imperfect segments plus subtle wobble. -->
 
-  <!-- Arrow 1 -->
-  <line class="arrow" x1="380" y1="337" x2="450" y2="337"/>
-  <polygon class="arrow-head" points="450,325 478,337 450,349"/>
+  <!-- LEFT BOX: input tokens. Roughly x=95, y=235, w=270, h=205 -->
+  <path class="ink" d="
+    M 98 240
+    Q 230 237 365 242
+    Q 367 340 361 443
+    Q 228 446 96 441
+    Q 98 343 98 240
+    Z"/>
 
-  <!-- LLM box (accent) -->
-  <rect class="box-accent" x="478" y="237" width="244" height="200" rx="16" ry="16"/>
-  <text class="label-accent" x="600" y="355" font-size="56">LLM</text>
+  <!-- CENTER BOX (LLM, accent-filled). Roughly x=465, y=225, w=270, h=225 -->
+  <path class="accent-fill" d="
+    M 470 230
+    Q 603 226 736 232
+    Q 739 338 733 448
+    Q 601 452 467 446
+    Q 470 338 470 230
+    Z"/>
+  <path class="ink-accent" d="
+    M 470 230
+    Q 603 226 736 232
+    Q 739 338 733 448
+    Q 601 452 467 446
+    Q 470 338 470 230
+    Z"/>
 
-  <!-- Arrow 2 -->
-  <line class="arrow" x1="722" y1="337" x2="792" y2="337"/>
-  <polygon class="arrow-head" points="792,325 820,337 792,349"/>
+  <!-- RIGHT BOX: output tokens. Roughly x=835, y=235, w=270, h=205 -->
+  <path class="ink" d="
+    M 838 241
+    Q 970 238 1105 243
+    Q 1107 340 1101 444
+    Q 968 446 836 442
+    Q 838 344 838 241
+    Z"/>
 
-  <!-- Output tokens box -->
-  <rect class="box" x="840" y="237" width="300" height="200" rx="16" ry="16"/>
-  <text class="label" x="990" y="330" font-size="40">Output</text>
-  <text class="label" x="990" y="380" font-size="40">tokens</text>
+  <!-- Labels -->
+  <text class="label-hand" x="232" y="355" font-size="54">input tokens</text>
+  <text class="label-hand-accent" x="603" y="360" font-size="72">LLM</text>
+  <text class="label-hand" x="971" y="355" font-size="54">output tokens</text>
 
-  <!-- Caption -->
-  <text class="sub" x="600" y="560" font-size="28">Tokens in, tokens out.</text>
+  <!-- Tiny underline beneath LLM (marginalia) -->
+  <path class="ink-accent" d="M 553 381 Q 603 385 653 381"/>
+
+  <!-- ARROW 1: left box -> LLM (hand-drawn line + V arrowhead) -->
+  <path class="ink" d="M 368 340 Q 400 336 420 340 Q 440 344 465 340"/>
+  <!-- arrowhead: two short diagonal strokes forming an open V -->
+  <path class="ink" d="M 465 340 L 448 329"/>
+  <path class="ink" d="M 465 340 L 449 352"/>
+
+  <!-- ARROW 2: LLM -> right box -->
+  <path class="ink" d="M 738 340 Q 770 343 790 339 Q 810 335 833 340"/>
+  <path class="ink" d="M 833 340 L 816 329"/>
+  <path class="ink" d="M 833 340 L 817 352"/>
+
+  <!-- Marginalia: tiny ink dot above left arrow -->
+  <circle class="dot" cx="417" cy="317" r="2.4"/>
+
+  <!-- Marginalia: tiny asterisk mark near right arrow -->
+  <path class="ink" d="M 790 316 L 796 322"/>
+  <path class="ink" d="M 796 316 L 790 322"/>
+  <path class="ink" d="M 793 313 L 793 325"/>
+
+  <!-- Caption underneath -->
+  <text class="caption-serif" x="600" y="560" font-size="26">the mechanism. every product now reduces to this.</text>
 </svg>

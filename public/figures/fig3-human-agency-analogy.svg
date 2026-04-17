@@ -1,99 +1,161 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Human cognition vs LLM harness: sensory input maps to input tokens, stream of consciousness to reasoning, grounded action to tool-grounded output.">
-  <title>Human agency analogy: three-level mapping to the LLM harness</title>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" role="img" aria-label="Hand-drawn diagram: human cognition mapped one-to-one onto an LLM harness. Sensory input to input tokens. Stream of consciousness to reasoning / inner monologue. Grounded action to tool-grounded output.">
+  <title>human agency analogy: three levels, two substrates</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&amp;family=Newsreader:ital,wght@0,400;1,400&amp;display=swap');
     :root {
-      --bg: #ffffff;
-      --fg: #111111;
-      --muted: #555555;
-      --accent: #0066CC;
+      --bg: #FAF7F0;
+      --fg: #1a1814;
+      --muted: #7a7368;
+      --accent: #0F4C81;
+      --accent-fill: rgba(15, 76, 129, 0.10);
     }
     @media (prefers-color-scheme: dark) {
       :root {
-        --bg: #0a0a0a;
-        --fg: #ffffff;
-        --muted: #bbbbbb;
-        --accent: #0066CC;
+        --bg: #1c1a15;
+        --fg: #eae6db;
+        --muted: #8a8276;
+        --accent: #6ba3d6;
+        --accent-fill: rgba(107, 163, 214, 0.14);
       }
     }
     .bg { fill: var(--bg); }
-    .box { fill: var(--bg); stroke: var(--fg); stroke-width: 2.5; }
-    .box-accent { fill: var(--bg); stroke: var(--accent); stroke-width: 2.5; }
-    .col-title { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 800; fill: var(--fg); text-anchor: middle; }
-    .col-title-accent { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 800; fill: var(--accent); text-anchor: middle; }
-    .label { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 600; fill: var(--fg); text-anchor: middle; }
-    .sub { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; font-weight: 400; fill: var(--muted); text-anchor: middle; }
-    .v-arrow { stroke: var(--fg); stroke-width: 3; fill: none; }
-    .v-arrow-accent { stroke: var(--accent); stroke-width: 3; fill: none; }
-    .h-arrow { stroke: var(--muted); stroke-width: 2; fill: none; stroke-dasharray: 6 6; }
-    .arrow-head { fill: var(--fg); stroke: none; }
-    .arrow-head-accent { fill: var(--accent); stroke: none; }
-    .arrow-head-muted { fill: var(--muted); stroke: none; }
+    .ink {
+      fill: none;
+      stroke: var(--fg);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ink-accent {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2.2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+    .ink-dashed-muted {
+      fill: none;
+      stroke: var(--muted);
+      stroke-width: 2.0;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-dasharray: 7 7;
+    }
+    .accent-fill { fill: var(--accent-fill); stroke: none; }
+    .dot { fill: var(--fg); stroke: none; }
+    .title-hand {
+      font-family: 'Caveat', 'Comic Sans MS', 'Bradley Hand', cursive;
+      font-weight: 700;
+      fill: var(--fg);
+      text-anchor: middle;
+    }
+    .title-hand-accent {
+      font-family: 'Caveat', 'Comic Sans MS', 'Bradley Hand', cursive;
+      font-weight: 700;
+      fill: var(--accent);
+      text-anchor: middle;
+    }
+    .label-hand {
+      font-family: 'Caveat', 'Comic Sans MS', 'Bradley Hand', cursive;
+      font-weight: 600;
+      fill: var(--fg);
+      text-anchor: middle;
+    }
+    .caption-serif {
+      font-family: 'Newsreader', Georgia, 'Times New Roman', serif;
+      font-style: italic;
+      font-weight: 400;
+      fill: var(--muted);
+      text-anchor: middle;
+    }
   </style>
 
   <rect class="bg" x="0" y="0" width="1200" height="675"/>
 
-  <!-- Column headings -->
-  <text class="col-title" x="280" y="70" font-size="34">Human</text>
-  <text class="col-title-accent" x="920" y="70" font-size="34">LLM harness</text>
+  <!-- Column headers -->
+  <text class="title-hand" x="280" y="88" font-size="56">human</text>
+  <text class="title-hand-accent" x="920" y="88" font-size="56">harness</text>
+  <!-- underline flourish under each header -->
+  <path class="ink" d="M 218 104 Q 280 108 342 103"/>
+  <path class="ink-accent" d="M 848 104 Q 920 108 992 103"/>
 
-  <!-- Dividing line (subtle) -->
-  <line x1="600" y1="100" x2="600" y2="620" stroke="currentColor" stroke-dasharray="2 8" opacity="0.15"/>
+  <!-- ========= LEFT COLUMN (human) =========
+       Box dimensions: w ~360, h ~96. centre x = 280.
+       Row centres y = 175, 350, 525 -->
 
-  <!-- Left column (Human) -->
-  <!-- Row 1: Sensory input -->
-  <rect class="box" x="80" y="110" width="400" height="90" rx="12" ry="12"/>
-  <text class="label" x="280" y="162" font-size="26">Sensory input</text>
+  <!-- Row 1: sensory input -->
+  <path class="ink" d="M 102 130 Q 280 127 458 132 Q 461 175 457 221 Q 280 224 103 220 Q 102 175 102 130 Z"/>
+  <text class="label-hand" x="280" y="185" font-size="40">sensory input</text>
 
-  <!-- Row 2: Stream of consciousness -->
-  <rect class="box" x="80" y="292" width="400" height="90" rx="12" ry="12"/>
-  <text class="label" x="280" y="344" font-size="26">Stream of consciousness</text>
+  <!-- Row 2: stream of consciousness -->
+  <path class="ink" d="M 102 305 Q 280 302 458 307 Q 461 350 457 396 Q 280 399 103 395 Q 102 350 102 305 Z"/>
+  <text class="label-hand" x="280" y="360" font-size="40">stream of consciousness</text>
 
-  <!-- Row 3: Grounded action -->
-  <rect class="box" x="80" y="474" width="400" height="90" rx="12" ry="12"/>
-  <text class="label" x="280" y="526" font-size="26">Grounded action</text>
+  <!-- Row 3: grounded action -->
+  <path class="ink" d="M 102 480 Q 280 477 458 482 Q 461 525 457 571 Q 280 574 103 570 Q 102 525 102 480 Z"/>
+  <text class="label-hand" x="280" y="535" font-size="40">grounded action</text>
 
-  <!-- Left column vertical arrows -->
-  <line class="v-arrow" x1="280" y1="200" x2="280" y2="282"/>
-  <polygon class="arrow-head" points="268,282 292,282 280,298"/>
-  <line class="v-arrow" x1="280" y1="382" x2="280" y2="464"/>
-  <polygon class="arrow-head" points="268,464 292,464 280,480"/>
+  <!-- Left column vertical arrows (between rows) -->
+  <path class="ink" d="M 280 223 Q 278 250 281 302"/>
+  <path class="ink" d="M 281 302 L 272 289"/>
+  <path class="ink" d="M 281 302 L 290 289"/>
 
-  <!-- Right column (LLM harness) -->
-  <!-- Row 1: Input tokens -->
-  <rect class="box-accent" x="720" y="110" width="400" height="90" rx="12" ry="12"/>
-  <text class="label" x="920" y="162" font-size="26">Input tokens</text>
+  <path class="ink" d="M 280 398 Q 278 425 281 477"/>
+  <path class="ink" d="M 281 477 L 272 464"/>
+  <path class="ink" d="M 281 477 L 290 464"/>
 
-  <!-- Row 2: Reasoning / inner monologue -->
-  <rect class="box-accent" x="720" y="292" width="400" height="90" rx="12" ry="12"/>
-  <text class="label" x="920" y="337" font-size="24">Reasoning /</text>
-  <text class="label" x="920" y="365" font-size="24">inner monologue</text>
+  <!-- ========= RIGHT COLUMN (harness, accent-filled) =========
+       centre x = 920, same row centres -->
 
-  <!-- Row 3: Tool-grounded output -->
-  <rect class="box-accent" x="720" y="474" width="400" height="90" rx="12" ry="12"/>
-  <text class="label" x="920" y="526" font-size="26">Tool-grounded output</text>
+  <!-- Row 1: input tokens -->
+  <path class="accent-fill" d="M 742 130 Q 920 127 1098 132 Q 1101 175 1097 221 Q 920 224 743 220 Q 742 175 742 130 Z"/>
+  <path class="ink-accent" d="M 742 130 Q 920 127 1098 132 Q 1101 175 1097 221 Q 920 224 743 220 Q 742 175 742 130 Z"/>
+  <text class="label-hand" x="920" y="185" font-size="40">input tokens</text>
 
-  <!-- Right column vertical arrows -->
-  <line class="v-arrow-accent" x1="920" y1="200" x2="920" y2="282"/>
-  <polygon class="arrow-head-accent" points="908,282 932,282 920,298"/>
-  <line class="v-arrow-accent" x1="920" y1="382" x2="920" y2="464"/>
-  <polygon class="arrow-head-accent" points="908,464 932,464 920,480"/>
+  <!-- Row 2: reasoning / inner monologue -->
+  <path class="accent-fill" d="M 742 305 Q 920 302 1098 307 Q 1101 350 1097 396 Q 920 399 743 395 Q 742 350 742 305 Z"/>
+  <path class="ink-accent" d="M 742 305 Q 920 302 1098 307 Q 1101 350 1097 396 Q 920 399 743 395 Q 742 350 742 305 Z"/>
+  <text class="label-hand" x="920" y="342" font-size="36">reasoning /</text>
+  <text class="label-hand" x="920" y="380" font-size="36">inner monologue</text>
 
-  <!-- Horizontal mapping arrows (one-to-one between columns) -->
-  <line class="h-arrow" x1="480" y1="155" x2="720" y2="155"/>
-  <polygon class="arrow-head-muted" points="720,147 720,163 734,155"/>
+  <!-- Row 3: tool-grounded output -->
+  <path class="accent-fill" d="M 742 480 Q 920 477 1098 482 Q 1101 525 1097 571 Q 920 574 743 570 Q 742 525 742 480 Z"/>
+  <path class="ink-accent" d="M 742 480 Q 920 477 1098 482 Q 1101 525 1097 571 Q 920 574 743 570 Q 742 525 742 480 Z"/>
+  <text class="label-hand" x="920" y="535" font-size="40">tool-grounded output</text>
 
-  <line class="h-arrow" x1="480" y1="337" x2="720" y2="337"/>
-  <polygon class="arrow-head-muted" points="720,329 720,345 734,337"/>
+  <!-- Right column vertical arrows (accent-coloured) -->
+  <path class="ink-accent" d="M 920 223 Q 918 250 921 302"/>
+  <path class="ink-accent" d="M 921 302 L 912 289"/>
+  <path class="ink-accent" d="M 921 302 L 930 289"/>
 
-  <line class="h-arrow" x1="480" y1="519" x2="720" y2="519"/>
-  <polygon class="arrow-head-muted" points="720,511 720,527 734,519"/>
+  <path class="ink-accent" d="M 920 398 Q 918 425 921 477"/>
+  <path class="ink-accent" d="M 921 477 L 912 464"/>
+  <path class="ink-accent" d="M 921 477 L 930 464"/>
 
-  <!-- Mapping labels above dashed arrows -->
-  <text class="sub" x="600" y="143" font-size="16">maps to</text>
-  <text class="sub" x="600" y="325" font-size="16">maps to</text>
-  <text class="sub" x="600" y="507" font-size="16">maps to</text>
+  <!-- ========= HORIZONTAL DASHED MAPPING ARROWS (one-to-one, subtle wobble) ========= -->
+  <!-- Row 1 -->
+  <path class="ink-dashed-muted" d="M 462 175 Q 600 172 740 176"/>
+  <path class="ink" d="M 740 176 L 724 168" stroke="var(--muted)"/>
+  <path class="ink" d="M 740 176 L 724 184" stroke="var(--muted)"/>
+
+  <!-- Row 2 -->
+  <path class="ink-dashed-muted" d="M 462 350 Q 600 347 740 351"/>
+  <path class="ink" d="M 740 351 L 724 343" stroke="var(--muted)"/>
+  <path class="ink" d="M 740 351 L 724 359" stroke="var(--muted)"/>
+
+  <!-- Row 3 -->
+  <path class="ink-dashed-muted" d="M 462 525 Q 600 522 740 526"/>
+  <path class="ink" d="M 740 526 L 724 518" stroke="var(--muted)"/>
+  <path class="ink" d="M 740 526 L 724 534" stroke="var(--muted)"/>
+
+  <!-- Marginalia: small ink dot near left header -->
+  <circle class="dot" cx="355" cy="72" r="2.6"/>
+  <!-- Marginalia: tiny asterisk between columns near the middle row -->
+  <path class="ink" d="M 600 348 L 600 358" stroke="var(--muted)"/>
+  <path class="ink" d="M 595 351 L 605 355" stroke="var(--muted)"/>
+  <path class="ink" d="M 605 351 L 595 355" stroke="var(--muted)"/>
 
   <!-- Caption -->
-  <text class="sub" x="600" y="640" font-size="20">Three layers, two substrates: perception, thought, action.</text>
+  <text class="caption-serif" x="600" y="640" font-size="26">same loop. same architecture.</text>
 </svg>
