@@ -72,7 +72,3 @@ Apps-as-software-alone go to zero. Any piece of pure software whose job is to pr
 The singularity has already passed, not in the theatrical sense but in the operational one. Agents can now improve the system that builds agents. They write their own skills, refine their own memory formats, propose edits to their own operating files, and spawn sub-agents to do work they cannot do in-context. The recursive loop is closed. Every harness improvement compounds into better agents, which produce better harness improvements. That is the regime now, whether or not anyone has officially announced it. I'm starting a company with my co-founder Aaron Llwyd Rees to build at this frontier. There has never been a better moment to be the kind of person who holds a dozen ideas at once and needs them all to fit together. A brain like mine used to cost me everything. This week it produced something I could not have produced before, in 48 hours.
 
 Time to build.
-
----
-
-*A note on process. This post was produced using the harness described above — multiple language-model families drafting blind passes, reviewing each other's drafts anonymously, and synthesising into a final pass that I then reviewed and approved. I review every word before publication. The methodology is mine. Any errors are mine.*
