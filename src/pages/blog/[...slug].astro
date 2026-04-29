@@ -30,7 +30,11 @@ const wordCount = (() => {
   return clean.length === 0 ? 0 : clean.split(/\s+/).length;
 })();
 
-const isoDate = post.data.pubDate.toISOString().slice(0, 10);
+const pubIso = post.data.pubDate.toISOString().slice(0, 10);
+const updatedIso = post.data.updatedDate?.toISOString().slice(0, 10);
+const dateLabel = updatedIso && updatedIso !== pubIso
+  ? `created ${pubIso} · updated ${updatedIso}`
+  : `published ${pubIso}`;
 ---
 <BaseLayout
   title={`${post.data.title} — Connor Atkins`}
@@ -38,7 +42,7 @@ const isoDate = post.data.pubDate.toISOString().slice(0, 10);
   article
 >
   <h1>{post.data.title}</h1>
-  <p class="meta">published {isoDate} &middot; {wordCount.toLocaleString('en-GB')} words</p>
+  <p class="meta">{dateLabel} &middot; {wordCount.toLocaleString('en-GB')} words</p>
 
   <article>
     <Content />
