@@ -14,6 +14,14 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+# Opt every JavaScript action in this workflow to Node.js 24. GitHub forces
+# Node 24 by default from 2026-06-02 and removes Node 20 entirely on
+# 2026-09-16. Setting this now surfaces any incompatibility early instead of
+# the morning the runner flips. Remove this env once withastro/action and the
+# bundled actions ship Node 24-native major versions.
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
 jobs:
   build:
     runs-on: ubuntu-latest
