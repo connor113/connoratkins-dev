@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>X OAuth Callback</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: #1a1a1a;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      border: 1px solid #333;
+    }
+    h1 { font-size: 20px; margin-bottom: 8px; color: #fff; }
+    .status { font-size: 13px; color: #888; margin-bottom: 24px; }
+    .code-box {
+      background: #0d0d0d;
+      border: 1px solid #333;
+      border-radius: 8px;
+      padding: 20px;
+      margin: 16px 0;
+      font-family: "SF Mono", "Fira Code", "Fira Mono", monospace;
+      font-size: 22px;
+      letter-spacing: 1px;
+      word-break: break-all;
+      color: #4ade80;
+      user-select: all;
+      cursor: pointer;
+    }
+    .code-box:hover { border-color: #4ade80; }
+    .copy-btn {
+      background: #4ade80;
+      color: #0a0a0a;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .copy-btn:hover { background: #22c55e; }
+    .copy-btn.copied { background: #3b82f6; }
+    .error {
+      color: #f87171;
+      background: rgba(248, 113, 113, 0.1);
+      border-radius: 8px;
+      padding: 12px;
+      margin: 12px 0;
+      font-size: 13px;
+      word-break: break-all;
+    }
+    .next-step {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid #333;
+      font-size: 13px;
+      color: #888;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .next-step code {
+      background: #0d0d0d;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #fbbf24;
+      white-space: nowrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>X OAuth Authorized ✓</h1>
+    <p class="status">Copy the authorization code below and run the command in your SSH session.</p>
+
+    <div id="code-container" style="display:none">
+      <label style="font-size:11px;color:#666;text-transform:uppercase;letter-spacing:1px">Authorization Code</label>
+      <div class="code-box" id="code" onclick="copyCode()"></div>
+      <button class="copy-btn" id="copy-btn" onclick="copyCode()">Copy Code</button>
+    </div>
+
+    <div id="error-container" style="display:none">
+      <div class="error" id="error-msg"></div>
+    </div>
+
+    <div class="next-step">
+      SSH into your VPS and run:<br>
+      <code>openclaw models auth x-account --code &lt;paste-the-code&gt;</code>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const error = params.get('error');
+    const errorDesc = params.get('error_description');
+
+    if (code) {
+      document.getElementById('code').textContent = code;
+      document.getElementById('code-container').style.display = 'block';
+    } else if (error) {
+      document.getElementById('error-msg').textContent = error + (errorDesc ? ': ' + errorDesc : '');
+      document.getElementById('error-container').style.display = 'block';
+    } else {
+      document.getElementById('error-msg').textContent = 'No authorization code or error received. Check the URL parameters.';
+      document.getElementById('error-container').style.display = 'block';
+    }
+
+    function copyCode() {
+      const code = document.getElementById('code').textContent;
+      navigator.clipboard.writeText(code).then(() => {
+        const btn = document.getElementById('copy-btn');
+        btn.textContent = 'Copied!';
+        btn.classList.add('copied');
+        setTimeout(() => {
+          btn.textContent = 'Copy Code';
+          btn.classList.remove('copied');
+        }, 2000);
+      });
+    }
+  </script>
+</body>
+</html>
